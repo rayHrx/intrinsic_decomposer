@@ -2,8 +2,11 @@ import sys, torch, torch.nn as nn, torch.nn.functional as F
 from torch.autograd import Variable
 
 def conv(in_channels, out_channels, kernel_size, stride, padding):
+    #Just create a normal 2d convolution layer
     convolution = nn.Conv2d(in_channels, out_channels, kernel_size=kernel_size, stride=stride, padding=padding)
+    #Applying a batchNorm2d basically accelerate covergence speed during training paper: https://arxiv.org/pdf/1502.03167.pdf
     batch_norm = nn.BatchNorm2d(out_channels)
+    #Add the batch_norm layer after the convoluation layer
     layer = nn.Sequential(convolution, batch_norm)
     return layer
 
